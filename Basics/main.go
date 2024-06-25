@@ -1,19 +1,37 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math/rand"
+)
 
 func main() {
 
-	addCard("Plus 4")
-	addCard("Plus 2")
-	addCard("Plus 14")
+	var playCards deck
+	playCards = deck{}
 
-	uno := getDeck()
-	fmt.Println(uno)
+	playCards = playCards.addCard("Plus 4")
+	playCards = playCards.addCard("Pluse 2")
+	playCards = playCards.addCard("Plus 14")
 
-	deleteCardAt(1)
+	fmt.Println(playCards.getDeck())
 
-	uno = getDeck()
-	fmt.Println(uno)
+	// playCards.deleteCardAt(1)
+
+	fmt.Println(playCards.toString())
+
+	playCards.saveToFile("mycards.txt")
+	fmt.Println("Read from file")
+	fmt.Println(readFromFile("mycards.txt"))
+
+	for index, _ := range playCards {
+		swap := rand.Intn(3)
+		fmt.Println(index)
+		fmt.Println(swap)
+		temp := playCards[index]
+		playCards[index] = playCards[swap]
+		playCards[swap] = temp
+	}
+	fmt.Println(playCards)
 
 }
