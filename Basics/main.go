@@ -7,6 +7,13 @@ import (
 
 func main() {
 
+	fmt.Println(`
+	Hello
+	This
+	Is
+	Jennings
+	
+	`)
 	var playCards deck
 	playCards = deck{}
 
