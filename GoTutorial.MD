@@ -14,6 +14,8 @@
 - Avoid `this` or `self` which will break Go convention
 - Use `_` if we are not using any variable (Eg: index in for loop)
 - In a way it resembles C language Structs and Pointers.
+- Everytime when you pass arguments, a copy of the value is passed and not the
+  actual value. Hence Pointers comes to picture to mutate the actual value.
 
 ## Main Function
 
@@ -77,6 +79,8 @@ require github.com/duktig-solutions/go-random-date-generator v0.0.0-202208231706
 When you get project, check for the go.mod file and go with `go.get` to install 
 all the dependencies mentioned there.
 
+If you want the methods in package accessible to outside, the First letter of the method should be capitals.
+
 
 ### Pointer operations
 
@@ -105,6 +109,8 @@ type user struct {
   better to use the pointers along with structs when passing as arguments.
 - A function attached to a struct is called method.
 - `function (d deck) print() {}` This is a **receiver** function and any variable of type deck has got the access to the print method
+- If the receiver function a mutation method, we have to use pointer receiver argument as a copy of the data will be passed if we dont use the pointers.`function (d *deck) setData() { d.name = ""}`
+- In case of constructor function, where we return the created object it is wiser to return the pointer to avoid the copy values getting passed.
 
 
 | Value Types  | Reference Types  |
@@ -115,6 +121,59 @@ type user struct {
 |   bool       |     pointers     |
 |   structs    |  functions       |
 
+
+## Interface
+
+```
+type saver interface {
+  SaveData() error
+}
+```
+- Now this interface can be used as an argument of a method which will allow
+objects which fulfils this signature.
+
+```
+type displayer interface {
+  DisplayData() error
+}
+
+type Mixer interface {
+  saver
+
+  DisplayData()
+}
+``` 
+-  The above is an example for  embeddable interface
+  
+- Also, you have a method and you want to allow object of anytype, you can follow the below
+```
+func printSOmething(value interface{}){
+  fmt.Println(value)
+}
+```
+## Generics
+ Please see the code in interfaces section
+
+
+## Arrays, Slices & Maps
+```
+prices := [4]float64{10.1, 12.3, 11.00, 22.32}
+```
+Slices are nothing but the window in the Original array. Any mutation in the slice will bring change in original array.
+
+Length - gets the size of the slice or array.
+Capacity - this is bit different. Total capacity the slice identifies from where it is taken towards the right.
+
+To create dynamic arrays
+```
+prices := []float64{}
+
+```
+
+
+## Concurrency
+
+Using GoRoutines features you can make the methods to be executed concurrently.
 
 ## Testing
 

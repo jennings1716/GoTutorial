@@ -1,0 +1,9 @@
+POST http://localhost:8081/events
+content-type: application/json
+
+{
+    "Name":"sd",
+    "Description":"",
+    "Location":"",
+    "DateTime":"10:10"
+}
